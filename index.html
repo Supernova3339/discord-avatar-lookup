@@ -97,6 +97,7 @@
 
                     var avatarUrl = data.avatar.link;
 
+                    $('#avatarMessage').text(""); // Clear the avatar message
                     $('#avatarImage').attr('src', avatarUrl).css('display', 'block'); // Show the avatar
                     $('#avatarContainer').addClass('show').show(); // Show the avatar container
                     $('#downloadButton').show(); // Set the download link and show the button
@@ -105,7 +106,7 @@
                         downloadAvatar(avatarUrl);
                     });
                 } else {
-                    $('#avatarMessage').text("This user does not have an avatar set!"); // Display banner message
+                    $('#avatarMessage').text("This user does not have an avatar set!"); // Display avatar message
                     $('#avatarImage').hide(); // Hide the banner image
                     $('#avatarContainer').show(); // Show the banner container
                     $('#downloadButton').hide(); // Hide the download button
