@@ -51,6 +51,9 @@
             border-radius: 5px;
             margin-right: 10px;
         }
+        p#avatarMessage {
+            margin-top: 20px;
+        }
         button#getAvatarButton {
             border-radius: 5px;
         }
@@ -67,6 +70,7 @@
     </div>
     <div id="avatarContainer" class="ui segment show" style="display: none;">
         <img id="avatarImage" src="" alt="Avatar" class="centered">
+        <p id="avatarMessage"></p>
         <a id="downloadButton" class="ui primary icon button">
             <i class="download icon"></i>
             Download Avatar
@@ -89,15 +93,23 @@
             var apiUrl = `https://discordlookup.mesavirep.xyz/v1/user/${userId}`;
 
             $.get(apiUrl, function(data) {
-                var avatarUrl = data.avatar.link;
+                if(data.avatar && data.avatar.link) {
 
-                $('#avatarImage').attr('src', avatarUrl).css('display', 'block'); // Show the avatar
-                $('#avatarContainer').addClass('show').show(); // Show the avatar container
-                $('#downloadButton').show(); // Set the download link and show the button
-                // Spacing cause why not
-                $('#downloadButton').click(function() {
-                    downloadAvatar(avatarUrl);
-                });
+                    var avatarUrl = data.avatar.link;
+
+                    $('#avatarImage').attr('src', avatarUrl).css('display', 'block'); // Show the avatar
+                    $('#avatarContainer').addClass('show').show(); // Show the avatar container
+                    $('#downloadButton').show(); // Set the download link and show the button
+                    // Spacing cause why not
+                    $('#downloadButton').click(function () {
+                        downloadAvatar(avatarUrl);
+                    });
+                } else {
+                    $('#avatarMessage').text("This user does not have an avatar set!"); // Display banner message
+                    $('#avatarImage').hide(); // Hide the banner image
+                    $('#avatarContainer').show(); // Show the banner container
+                    $('#downloadButton').hide(); // Hide the download button
+                }
             }).fail(function() {
                 alert("Failed to fetch user data. Please check the User ID or try again later.");
             });
